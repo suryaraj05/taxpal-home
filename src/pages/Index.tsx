@@ -74,6 +74,61 @@ const Index = () => {
         </div>
       </section>
 
+      {/* More Actions */}
+      <section className="mt-8" aria-label="More actions">
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+          और विकल्प <span className="font-normal">• More</span>
+        </h2>
+        <div className="space-y-3">
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate("/file-return")}
+            className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-card text-left"
+          >
+            <span className="text-2xl">📤</span>
+            <div className="flex-1">
+              <p className="font-medium text-foreground">रिटर्न फाइल करें</p>
+              <p className="text-xs text-muted-foreground">File Return • GSTR-3B</p>
+            </div>
+            <span className="rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">8 दिन</span>
+          </motion.button>
+
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate("/orchestration")}
+            className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-card text-left"
+          >
+            <span className="text-2xl">🔄</span>
+            <div className="flex-1">
+              <p className="font-medium text-foreground">प्रक्रिया दृश्य</p>
+              <p className="text-xs text-muted-foreground">Orchestration Overview</p>
+            </div>
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">63%</span>
+          </motion.button>
+
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate("/register")}
+            className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-card text-left"
+          >
+            <span className="text-2xl">📝</span>
+            <div className="flex-1">
+              <p className="font-medium text-foreground">पंजीकरण</p>
+              <p className="text-xs text-muted-foreground">Registration & GST Setup</p>
+            </div>
+          </motion.button>
+        </div>
+      </section>
+
       {/* Recent Activity */}
       <div className="mt-8">
         <RecentActivity />

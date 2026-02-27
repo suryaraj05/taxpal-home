@@ -7,12 +7,17 @@ import Index from "./pages/Index";
 import AddInvoice from "./pages/AddInvoice";
 import VoiceAssistant from "./pages/VoiceAssistant";
 import Summary from "./pages/Summary";
+import Invoices from "./pages/Invoices";
+import Profile from "./pages/Profile";
+import FileReturn from "./pages/FileReturn";
+import Orchestration from "./pages/Orchestration";
+import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
 
-const hideNavRoutes = ["/add-invoice", "/chat"];
+const hideNavRoutes = ["/add-invoice", "/chat", "/file-return", "/orchestration", "/register"];
 
 const AppLayout = () => {
   const location = useLocation();
@@ -24,9 +29,12 @@ const AppLayout = () => {
         <Route path="/" element={<Index />} />
         <Route path="/add-invoice" element={<AddInvoice />} />
         <Route path="/chat" element={<VoiceAssistant />} />
-        <Route path="/invoices" element={<Index />} />
+        <Route path="/invoices" element={<Invoices />} />
         <Route path="/summary" element={<Summary />} />
-        <Route path="/profile" element={<Index />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/file-return" element={<FileReturn />} />
+        <Route path="/orchestration" element={<Orchestration />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {showNav && <BottomNav />}
