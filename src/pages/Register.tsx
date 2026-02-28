@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ChevronRight, Check } from "lucide-react";
+import { ArrowLeft, ChevronRight, Check, User, Store, ClipboardList, CheckCircle, Lightbulb, Sparkles } from "lucide-react";
+import { ReactNode } from "react";
 
 type RegistrationStep = "personal" | "business" | "gst" | "verify";
 
@@ -20,11 +21,11 @@ const Register = () => {
     bankAccount: "",
   });
 
-  const steps: { key: RegistrationStep; labelHi: string; labelEn: string; icon: string }[] = [
-    { key: "personal", labelHi: "व्यक्तिगत", labelEn: "Personal", icon: "👤" },
-    { key: "business", labelHi: "व्यापार", labelEn: "Business", icon: "🏪" },
-    { key: "gst", labelHi: "GST विवरण", labelEn: "GST Details", icon: "📋" },
-    { key: "verify", labelHi: "सत्यापन", labelEn: "Verify", icon: "✅" },
+  const steps: { key: RegistrationStep; labelHi: string; labelEn: string; icon: ReactNode }[] = [
+    { key: "personal", labelHi: "व्यक्तिगत", labelEn: "Personal", icon: <User className="h-4 w-4" /> },
+    { key: "business", labelHi: "व्यापार", labelEn: "Business", icon: <Store className="h-4 w-4" /> },
+    { key: "gst", labelHi: "GST विवरण", labelEn: "GST Details", icon: <ClipboardList className="h-4 w-4" /> },
+    { key: "verify", labelHi: "सत्यापन", labelEn: "Verify", icon: <CheckCircle className="h-4 w-4" /> },
   ];
 
   const currentIndex = steps.findIndex((s) => s.key === step);
@@ -116,9 +117,10 @@ const Register = () => {
               <input className={inputClass} placeholder="खाता संख्या दर्ज करें" value={formData.bankAccount} onChange={(e) => updateField("bankAccount", e.target.value)} />
             </div>
 
-            {/* GST info card */}
             <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-              <p className="text-sm font-medium text-foreground">💡 GST पंजीकरण के बारे में</p>
+              <p className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <Lightbulb className="h-4 w-4 text-warning" /> GST पंजीकरण के बारे में
+              </p>
               <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
                 <li>• ₹40 लाख+ टर्नओवर पर GST अनिवार्य</li>
                 <li>• सर्विस सेक्टर: ₹20 लाख+ पर अनिवार्य</li>
@@ -131,7 +133,7 @@ const Register = () => {
         return (
           <div className="space-y-4">
             <div className="rounded-2xl bg-success/5 border border-success/20 p-6 text-center">
-              <span className="text-5xl">🎉</span>
+              <Sparkles className="h-12 w-12 text-success mx-auto" />
               <h3 className="mt-3 text-xl font-semibold text-foreground">सब तैयार!</h3>
               <p className="text-sm text-muted-foreground mt-1">All set! Review your details.</p>
             </div>
@@ -158,13 +160,8 @@ const Register = () => {
 
   return (
     <main className="mx-auto min-h-screen max-w-[400px] px-6 pb-8 pt-6">
-      {/* Header */}
       <header className="flex items-center gap-3">
-        <button
-          onClick={handleBack}
-          className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted"
-          aria-label="Go back"
-        >
+        <button onClick={handleBack} className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted" aria-label="Go back">
           <ArrowLeft className="h-5 w-5 text-foreground" />
         </button>
         <div>
@@ -173,55 +170,39 @@ const Register = () => {
         </div>
       </header>
 
-      {/* Step indicator */}
       <div className="mt-6 flex gap-1">
         {steps.map((s, i) => (
           <div key={s.key} className="flex-1 flex flex-col items-center gap-1">
-            <div
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-sm ${
-                i < currentIndex
-                  ? "bg-success text-success-foreground"
-                  : i === currentIndex
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground"
-              }`}
-            >
+            <div className={`flex h-9 w-9 items-center justify-center rounded-full ${
+              i < currentIndex ? "bg-success text-success-foreground" : i === currentIndex ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}>
               {i < currentIndex ? <Check className="h-4 w-4" /> : s.icon}
             </div>
-            <span className={`text-[10px] ${i === currentIndex ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-              {s.labelHi}
-            </span>
+            <span className={`text-[10px] ${i === currentIndex ? "text-primary font-semibold" : "text-muted-foreground"}`}>{s.labelHi}</span>
           </div>
         ))}
       </div>
 
-      {/* Form */}
       <div className="mt-6">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.2 }}
-          >
-            <h2 className="text-lg font-semibold text-foreground mb-4">
-              {steps[currentIndex].icon} {steps[currentIndex].labelHi} <span className="text-sm font-normal text-muted-foreground">• {steps[currentIndex].labelEn}</span>
+          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground mb-4">
+              <span className="text-primary">{steps[currentIndex].icon}</span>
+              {steps[currentIndex].labelHi}
+              <span className="text-sm font-normal text-muted-foreground">• {steps[currentIndex].labelEn}</span>
             </h2>
             {renderStep()}
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Action button */}
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={handleNext}
         className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl gradient-primary py-4 text-lg font-semibold text-primary-foreground shadow-float"
         style={{ minHeight: "60px" }}
       >
-        <span>{step === "verify" ? "✅ पंजीकरण पूरा करें • Complete" : "आगे बढ़ें • Next"}</span>
-        {step !== "verify" && <ChevronRight className="h-5 w-5" />}
+        {step === "verify" ? <><CheckCircle className="h-5 w-5" /> पंजीकरण पूरा करें • Complete</> : <>आगे बढ़ें • Next <ChevronRight className="h-5 w-5" /></>}
       </motion.button>
     </main>
   );
