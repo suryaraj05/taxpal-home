@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
 interface QuickActionProps {
-  icon: string;
+  icon: ReactNode;
   labelHindi: string;
   labelEnglish: string;
   badge?: string;
@@ -35,14 +35,14 @@ const QuickActionButton = ({
     >
       {badge && (
         <span
-          className={`absolute right-3 top-3 rounded-full bg-warning px-2.5 py-0.5 text-xs font-semibold text-warning-foreground`}
+          className="absolute right-3 top-3 rounded-full bg-warning px-2.5 py-0.5 text-xs font-semibold text-warning-foreground"
         >
           {badge}
         </span>
       )}
-      <span className="text-5xl" aria-hidden="true">
+      <div className="flex h-12 w-12 items-center justify-center text-primary" aria-hidden="true">
         {icon}
-      </span>
+      </div>
       <span className="mt-3 text-sm font-semibold text-foreground">
         {labelHindi}
       </span>

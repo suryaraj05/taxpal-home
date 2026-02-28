@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Search, Filter, Plus, ChevronRight } from "lucide-react";
+import { Search, Plus, ChevronRight, Upload, Download, CheckCircle, Clock, AlertCircle, SearchX } from "lucide-react";
 
 interface Invoice {
   id: string;
@@ -23,9 +23,9 @@ const mockInvoices: Invoice[] = [
 ];
 
 const statusConfig = {
-  verified: { label: "सत्यापित", labelEn: "Verified", icon: "✅", className: "bg-success/10 text-success" },
-  pending: { label: "लंबित", labelEn: "Pending", icon: "⏳", className: "bg-warning/10 text-warning" },
-  error: { label: "त्रुटि", labelEn: "Error", icon: "❌", className: "bg-destructive/10 text-destructive" },
+  verified: { label: "सत्यापित", labelEn: "Verified", icon: <CheckCircle className="h-3.5 w-3.5" />, className: "bg-success/10 text-success" },
+  pending: { label: "लंबित", labelEn: "Pending", icon: <Clock className="h-3.5 w-3.5" />, className: "bg-warning/10 text-warning" },
+  error: { label: "त्रुटि", labelEn: "Error", icon: <AlertCircle className="h-3.5 w-3.5" />, className: "bg-destructive/10 text-destructive" },
 };
 
 type FilterType = "all" | "sales" | "purchase";
@@ -41,18 +41,16 @@ const Invoices = () => {
     return matchesSearch && matchesFilter;
   });
 
-  const salesTotal = mockInvoices.filter((i) => i.type === "sales").reduce((s) => s + 1, 0);
-  const purchaseTotal = mockInvoices.filter((i) => i.type === "purchase").reduce((s) => s + 1, 0);
+  const salesTotal = mockInvoices.filter((i) => i.type === "sales").length;
+  const purchaseTotal = mockInvoices.filter((i) => i.type === "purchase").length;
 
   return (
     <main className="mx-auto min-h-screen max-w-[400px] px-6 pb-32 pt-6">
-      {/* Header */}
       <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-semibold text-foreground">चालान</h1>
         <p className="text-sm text-muted-foreground">Invoices • {mockInvoices.length} कुल</p>
       </motion.header>
 
-      {/* Search */}
       <div className="mt-4 relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <input
@@ -65,7 +63,6 @@ const Invoices = () => {
         />
       </div>
 
-      {/* Filter tabs */}
       <div className="mt-4 flex gap-2">
         {([
           { key: "all" as FilterType, labelHi: "सभी", labelEn: "All", count: mockInvoices.length },
@@ -76,9 +73,7 @@ const Invoices = () => {
             key={f.key}
             onClick={() => setFilter(f.key)}
             className={`flex-1 rounded-xl py-2.5 text-sm font-medium transition-colors ${
-              filter === f.key
-                ? "bg-primary text-primary-foreground shadow-soft"
-                : "bg-card border border-border text-muted-foreground"
+              filter === f.key ? "bg-primary text-primary-foreground shadow-soft" : "bg-card border border-border text-muted-foreground"
             }`}
           >
             {f.labelHi} ({f.count})
@@ -86,7 +81,6 @@ const Invoices = () => {
         ))}
       </div>
 
-      {/* Invoice list */}
       <div className="mt-6 space-y-3">
         <AnimatePresence>
           {filtered.map((inv, i) => {
@@ -101,8 +95,8 @@ const Invoices = () => {
                 className="w-full rounded-2xl border border-border bg-card p-4 shadow-card text-left flex items-center gap-3 hover:bg-muted/50 transition-colors"
                 aria-label={`${inv.party}, ${inv.amount}, ${status.labelEn}`}
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted text-2xl">
-                  {inv.type === "sales" ? "📤" : "📥"}
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${inv.type === "sales" ? "bg-primary/10 text-primary" : "bg-success/10 text-success"}`}>
+                  {inv.type === "sales" ? <Upload className="h-5 w-5" /> : <Download className="h-5 w-5" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground truncate">{inv.party}</p>
@@ -121,14 +115,13 @@ const Invoices = () => {
 
         {filtered.length === 0 && (
           <div className="text-center py-12">
-            <span className="text-4xl">🔍</span>
+            <SearchX className="h-10 w-10 text-muted-foreground mx-auto" />
             <p className="mt-3 text-muted-foreground">कोई चालान नहीं मिला</p>
             <p className="text-sm text-muted-foreground">No invoices found</p>
           </div>
         )}
       </div>
 
-      {/* FAB */}
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => navigate("/add-invoice")}

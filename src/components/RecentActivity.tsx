@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
+import { CheckCircle, Upload, Bell } from "lucide-react";
+import { ReactNode } from "react";
 
 interface ActivityItem {
-  icon: string;
+  icon: ReactNode;
+  iconClass: string;
   textHindi: string;
   textEnglish: string;
   time: string;
@@ -9,19 +12,22 @@ interface ActivityItem {
 
 const items: ActivityItem[] = [
   {
-    icon: "✅",
+    icon: <CheckCircle className="h-5 w-5" />,
+    iconClass: "text-success bg-success/10",
     textHindi: "नया चालान: ABC Traders - ₹1,18,000",
     textEnglish: "New invoice: ABC Traders - ₹1,18,000",
     time: "2 मिनट पहले",
   },
   {
-    icon: "📤",
+    icon: <Upload className="h-5 w-5" />,
+    iconClass: "text-primary bg-primary/10",
     textHindi: "GSTR-3B फाइल किया गया",
     textEnglish: "GSTR-3B filed successfully",
     time: "1 घंटा पहले",
   },
   {
-    icon: "🔔",
+    icon: <Bell className="h-5 w-5" />,
+    iconClass: "text-warning bg-warning/10",
     textHindi: "ITC मिलान पूरा हुआ",
     textEnglish: "ITC matching completed",
     time: "3 घंटे पहले",
@@ -59,9 +65,9 @@ const RecentActivity = () => {
             className="flex items-start gap-3 rounded-xl bg-card p-4 shadow-card"
             aria-label={item.textEnglish}
           >
-            <span className="text-2xl" aria-hidden="true">
+            <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${item.iconClass}`} aria-hidden="true">
               {item.icon}
-            </span>
+            </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground leading-snug">
                 {item.textHindi}

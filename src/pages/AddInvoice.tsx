@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight, Camera, ImageIcon, Pencil, Upload, Download, RefreshCw, Check, Lightbulb, FileText, Mic } from "lucide-react";
 
 type Method = "camera" | "gallery" | "manual" | null;
 
@@ -11,7 +11,6 @@ const AddInvoice = () => {
   const [captured, setCaptured] = useState(false);
   const [showTip, setShowTip] = useState(true);
 
-  // Manual entry form state
   const [manualData, setManualData] = useState({
     partyName: "",
     gstNumber: "",
@@ -32,11 +31,7 @@ const AddInvoice = () => {
     return (
       <main className="mx-auto min-h-screen max-w-[400px] px-6 pb-8 pt-6">
         <header className="flex items-center gap-3">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted"
-            aria-label="Go back"
-          >
+          <button onClick={() => navigate(-1)} className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted" aria-label="Go back">
             <ArrowLeft className="h-5 w-5 text-foreground" />
           </button>
           <div>
@@ -51,9 +46,9 @@ const AddInvoice = () => {
 
         <div className="mt-4 space-y-4">
           {([
-            { key: "camera" as Method, icon: "📸", labelHi: "कैमरे से फोटो लें", labelEn: "Take Photo", desc: "चालान की फोटो लें और ऑटो-प्रोसेस करें" },
-            { key: "gallery" as Method, icon: "🖼️", labelHi: "गैलरी से चुनें", labelEn: "Choose from Gallery", desc: "पहले से ली गई फोटो चुनें" },
-            { key: "manual" as Method, icon: "✏️", labelHi: "हाथ से भरें", labelEn: "Manual Entry", desc: "चालान की जानकारी टाइप करें" },
+            { key: "camera" as Method, icon: <Camera className="h-7 w-7 text-primary" />, labelHi: "कैमरे से फोटो लें", labelEn: "Take Photo", desc: "चालान की फोटो लें और ऑटो-प्रोसेस करें" },
+            { key: "gallery" as Method, icon: <ImageIcon className="h-7 w-7 text-primary" />, labelHi: "गैलरी से चुनें", labelEn: "Choose from Gallery", desc: "पहले से ली गई फोटो चुनें" },
+            { key: "manual" as Method, icon: <Pencil className="h-7 w-7 text-primary" />, labelHi: "हाथ से भरें", labelEn: "Manual Entry", desc: "चालान की जानकारी टाइप करें" },
           ]).map((m, i) => (
             <motion.button
               key={m.key}
@@ -65,7 +60,7 @@ const AddInvoice = () => {
               className="flex w-full items-center gap-4 rounded-2xl border border-border bg-card p-5 shadow-card text-left hover:bg-muted/50 transition-colors"
               aria-label={m.labelEn}
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-muted text-3xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-muted">
                 {m.icon}
               </div>
               <div className="flex-1">
@@ -78,9 +73,8 @@ const AddInvoice = () => {
           ))}
         </div>
 
-        {/* Voice hint */}
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          🎙️ बोलें: &apos;फोटो लें&apos; या &apos;हाथ से भरें&apos;
+        <p className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <Mic className="h-4 w-4" /> बोलें: &apos;फोटो लें&apos; या &apos;हाथ से भरें&apos;
         </p>
       </main>
     );
@@ -91,31 +85,30 @@ const AddInvoice = () => {
     return (
       <main className="mx-auto min-h-screen max-w-[400px] px-6 pb-8 pt-6">
         <header className="flex items-center gap-3">
-          <button
-            onClick={() => setMethod(null)}
-            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted"
-            aria-label="Go back"
-          >
+          <button onClick={() => setMethod(null)} className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted" aria-label="Go back">
             <ArrowLeft className="h-5 w-5 text-foreground" />
           </button>
-          <div>
-            <h1 className="text-xl font-semibold text-foreground">✏️ हाथ से भरें</h1>
-            <p className="text-sm text-muted-foreground">Manual Entry</p>
+          <div className="flex items-center gap-2">
+            <Pencil className="h-5 w-5 text-primary" />
+            <div>
+              <h1 className="text-xl font-semibold text-foreground">हाथ से भरें</h1>
+              <p className="text-sm text-muted-foreground">Manual Entry</p>
+            </div>
           </div>
         </header>
 
         <div className="mt-6 space-y-4">
-          {/* Type selector */}
           <div className="flex gap-2">
             {(["sales", "purchase"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setManualData((p) => ({ ...p, type: t }))}
-                className={`flex-1 rounded-xl py-3 text-sm font-medium transition-colors ${
+                className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-medium transition-colors ${
                   manualData.type === t ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground"
                 }`}
               >
-                {t === "sales" ? "📤 बिक्री • Sales" : "📥 खरीद • Purchase"}
+                {t === "sales" ? <Upload className="h-4 w-4" /> : <Download className="h-4 w-4" />}
+                {t === "sales" ? "बिक्री • Sales" : "खरीद • Purchase"}
               </button>
             ))}
           </div>
@@ -150,7 +143,8 @@ const AddInvoice = () => {
           className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl gradient-primary py-4 text-lg font-semibold text-primary-foreground shadow-float"
           style={{ minHeight: "60px" }}
         >
-          ✅ चालान जोड़ें • Add Invoice
+          <Check className="h-5 w-5" />
+          चालान जोड़ें • Add Invoice
         </motion.button>
       </main>
     );
@@ -159,34 +153,24 @@ const AddInvoice = () => {
   // Camera / Gallery mode
   return (
     <div className="relative mx-auto flex min-h-screen max-w-[400px] flex-col bg-foreground">
-      {/* Top bar */}
       <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
-        <button
-          onClick={() => setMethod(null)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-foreground/40 backdrop-blur-sm"
-          aria-label="Go back"
-        >
+        <button onClick={() => setMethod(null)} className="flex h-12 w-12 items-center justify-center rounded-full bg-foreground/40 backdrop-blur-sm" aria-label="Go back">
           <ArrowLeft className="h-6 w-6 text-primary-foreground" />
         </button>
 
         <AnimatePresence>
           {showTip && !captured && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="flex-1 mx-3 rounded-xl bg-foreground/50 px-4 py-3 backdrop-blur-sm"
-            >
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex-1 mx-3 rounded-xl bg-foreground/50 px-4 py-3 backdrop-blur-sm">
               <button onClick={() => setShowTip(false)} className="float-right ml-2 text-primary-foreground/70 text-xs" aria-label="Dismiss tip">✕</button>
-              <p className="text-sm text-primary-foreground">
-                💡 {method === "camera" ? "टिप: बोलकर भी फोटो ले सकते हैं - 'फोटो लें' कहें" : "गैलरी से फोटो चुनें"}
+              <p className="flex items-center gap-2 text-sm text-primary-foreground">
+                <Lightbulb className="h-4 w-4 shrink-0" />
+                {method === "camera" ? "टिप: बोलकर भी फोटो ले सकते हैं - 'फोटो लें' कहें" : "गैलरी से फोटो चुनें"}
               </p>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Camera / Gallery area */}
       <div className="flex flex-1 items-center justify-center">
         <AnimatePresence mode="wait">
           {!captured ? (
@@ -206,7 +190,7 @@ const AddInvoice = () => {
             <motion.div key="preview" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-4 px-6">
               <div className="flex items-center justify-center rounded-2xl bg-muted/20" style={{ width: "300px", height: "400px" }}>
                 <div className="text-center">
-                  <span className="text-6xl">📄</span>
+                  <FileText className="h-16 w-16 text-primary-foreground mx-auto" />
                   <p className="mt-3 text-primary-foreground text-lg font-medium">फोटो ली गई</p>
                   <p className="text-primary-foreground/60 text-sm">Photo captured</p>
                 </div>
@@ -219,7 +203,6 @@ const AddInvoice = () => {
         </AnimatePresence>
       </div>
 
-      {/* Bottom controls */}
       <div className="relative z-10 px-6 pb-8 pt-4" style={{ background: "linear-gradient(transparent, hsla(0,0%,0%,0.6))" }}>
         {!captured ? (
           <div className="flex items-center justify-center">
@@ -229,17 +212,17 @@ const AddInvoice = () => {
               className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-primary bg-primary-foreground shadow-large"
               aria-label={method === "camera" ? "Capture photo" : "Select photo"}
             >
-              <span className="text-3xl">{method === "camera" ? "📸" : "🖼️"}</span>
+              {method === "camera" ? <Camera className="h-8 w-8 text-primary" /> : <ImageIcon className="h-8 w-8 text-primary" />}
             </motion.button>
           </div>
         ) : (
           <div className="flex gap-4">
             <button onClick={handleRetake} className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-primary-foreground/30 py-4 text-primary-foreground">
-              <span>🔄</span>
+              <RefreshCw className="h-5 w-5" />
               <span className="font-medium">दोबारा लें</span>
             </button>
             <button onClick={() => navigate("/")} className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-primary-foreground font-medium">
-              <span>✓</span>
+              <Check className="h-5 w-5" />
               <span>आगे बढ़ें</span>
             </button>
           </div>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 const ComplianceCard = () => {
   return (
@@ -33,8 +34,9 @@ const ComplianceCard = () => {
       </div>
 
       <div className="mt-4">
-        <p className="text-2xl font-semibold text-primary-foreground">
-          🎉 बहुत बढ़िया! <span className="text-lg font-normal">Excellent!</span>
+        <p className="flex items-center gap-2 text-2xl font-semibold text-primary-foreground">
+          <Sparkles className="h-6 w-6" />
+          बहुत बढ़िया! <span className="text-lg font-normal">Excellent!</span>
         </p>
         <p className="mt-1 text-base text-primary-foreground/80">
           सब कुछ सही चल रहा है • Everything is on track
