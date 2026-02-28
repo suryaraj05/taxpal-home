@@ -1,18 +1,20 @@
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Home, FileText, MessageCircle, User } from "lucide-react";
+import { ReactNode } from "react";
 
 interface Tab {
   to: string;
-  icon: string;
+  icon: ReactNode;
   labelHindi: string;
   labelEnglish: string;
 }
 
 const tabs: Tab[] = [
-  { to: "/", icon: "🏠", labelHindi: "होम", labelEnglish: "Home" },
-  { to: "/invoices", icon: "📄", labelHindi: "चालान", labelEnglish: "Invoices" },
-  { to: "/chat", icon: "💬", labelHindi: "चैट", labelEnglish: "Chat" },
-  { to: "/profile", icon: "👤", labelHindi: "प्रोफाइल", labelEnglish: "Profile" },
+  { to: "/", icon: <Home className="h-6 w-6" />, labelHindi: "होम", labelEnglish: "Home" },
+  { to: "/invoices", icon: <FileText className="h-6 w-6" />, labelHindi: "चालान", labelEnglish: "Invoices" },
+  { to: "/chat", icon: <MessageCircle className="h-6 w-6" />, labelHindi: "चैट", labelEnglish: "Chat" },
+  { to: "/profile", icon: <User className="h-6 w-6" />, labelHindi: "प्रोफाइल", labelEnglish: "Profile" },
 ];
 
 const BottomNav = () => {
@@ -40,7 +42,7 @@ const BottomNav = () => {
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <span className="relative z-10 text-2xl" aria-hidden="true">
+                <span className={`relative z-10 ${isActive ? "text-primary" : "text-muted-foreground"}`} aria-hidden="true">
                   {tab.icon}
                 </span>
                 <span
