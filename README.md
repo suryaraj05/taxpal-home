@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
+<div align="center">
 
-## Project info
+# 🧾 TaxSetu — 5-Agent GST Compliance Platform
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Multi-agent AI system for Indian MSME tax compliance. Voice-first. Hindi-native. Autonomous.**
 
-## How can I edit this code?
+[![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB?style=flat-square&logo=react)](https://react.dev)
+[![Gemini](https://img.shields.io/badge/LLM-Gemini%20API-4285F4?style=flat-square&logo=google)](https://ai.google.dev)
+[![Firebase](https://img.shields.io/badge/Backend-Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)](https://firebase.google.com)
+[![Multi-Agent](https://img.shields.io/badge/Architecture-Multi--Agent-00ff88?style=flat-square)]()
 
-There are several ways of editing your application.
+*Built at Build For India Hackathon · KSUM Kerala · Feb 2026*
 
-**Use Lovable**
+</div>
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## The Problem
 
-**Use your preferred IDE**
+88% of Indian MSMEs are underserved by English-only, desktop-first GST tools like ClearTax. Small business owners — street vendors, kiryana stores, small manufacturers — cannot afford CA fees and struggle with complex filing interfaces.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**TaxSetu solves this with voice-first, Hindi-native, autonomous AI agents.**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## Architecture — 5-Agent Orchestration
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Master Planner                         │
+│         Orchestrates all agents · Manages state             │
+└──────────┬──────────┬──────────┬──────────┬────────────────┘
+           │          │          │          │
+     ┌─────▼──┐ ┌─────▼──┐ ┌────▼───┐ ┌───▼────┐ ┌──────────┐
+     │WATCHER │ │CALC    │ │FILER   │ │GUARDIAN│ │NARRATOR  │
+     │        │ │        │ │        │ │        │ │          │
+     │OCR     │ │GST     │ │Pre-    │ │Notice  │ │Hindi     │
+     │invoice │ │logic + │ │flight  │ │analysis│ │voice     │
+     │ingest  │ │ITC     │ │filing  │ │+ risk  │ │explain   │
+     │via     │ │recon-  │ │valid-  │ │scoring │ │ations    │
+     │Gemini  │ │iliation│ │ation   │ │        │ │          │
+     └────────┘ └────────┘ └────────┘ └────────┘ └──────────┘
 ```
 
-**Edit a file directly in GitHub**
+**Each agent emits structured JSON:**
+```json
+{
+  "decision": "APPROVE_FILING",
+  "reasoning": "All 3 invoices validated, ITC ₹4,200 confirmed",
+  "confidence": 0.94,
+  "notify_flags": ["HIGH_VALUE_TRANSACTION"],
+  "next_agent": "FILER"
+}
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This makes every workflow **audit-ready** and **traceable**.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Input Methods
 
-## What technologies are used for this project?
+```
+📸 Photo Invoice  →  Gemini OCR  →  Auto-extract  →  Firestore
+🎤 Voice/Transcript  →  Parse  →  Ledger entry
+📊 Bulk CSV/Excel  →  GSTIN validation  →  ITC anomaly detection
+```
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Tech Stack
 
-## How can I deploy this project?
+| Layer | Technology |
+|:---|:---|
+| Frontend | React 18, Vite, Tailwind CSS |
+| LLM | Gemini API (Pro + Vision) |
+| Backend | Node.js, Cloud Functions |
+| Database | Firebase Firestore |
+| OCR | Gemini Vision multimodal |
+| Voice | Web Speech API + TTS |
+| Auth | Firebase Auth |
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## Key Differentiators vs ClearTax
 
-Yes, you can!
+| Feature | ClearTax | TaxSetu |
+|:---|:---:|:---:|
+| Voice input (Hindi) | ❌ | ✅ |
+| Photo invoice scan | ❌ | ✅ |
+| Autonomous filing validation | ❌ | ✅ |
+| Works on basic smartphones | Partial | ✅ |
+| Explainable AI reasoning | ❌ | ✅ |
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+<div align="center">
+
+Built by **[Surya Raj Salve](https://linkedin.com/in/salve-surya-raj)** — Agentic AI Engineer
+
+[LinkedIn](https://linkedin.com/in/salve-surya-raj) · [Email](mailto:suryarajsalve@gmail.com)
+
+</div>
